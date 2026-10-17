@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MaterialApp(home: HomeScreen()));
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Task 5.4')),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Scale and Fade'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const DetailsScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: ScaleTransition(
+                      scale: Tween<double>(
+                        begin: 0.8,
+                        end: 1.0,
+                      ).animate(animation),
+                      child: child,
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class DetailsScreen extends StatelessWidget {
+  const DetailsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Details')),
+      body: const Center(child: Text('Scaled and faded in!')),
+    );
+  }
+}
